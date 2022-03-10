@@ -1,0 +1,28 @@
+<div>
+    <script>
+        function getnewsdata() {
+            var oReq = new XMLHttpRequest();
+            oReq.open("GET", "/common/latestnews/"); //inside the common/latestnews api the info is fetched from the ADMIN Side
+            oReq.send();
+            oReq.onload = function() {
+                json = JSON.parse(oReq.responseText); //return is a json array with 3 objects
+                json.forEach(news=>{
+                    document.getElementById("news-carousel").insertAdjacentHTML('beforeend',
+                    `<div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">${news.title}</h5>
+                                <p class="card-text">${news.description}</p>
+                                <p class="card-text">${news.publishedAt}</p>
+                            </div>
+                        </div>
+                    </div>`);
+                })
+            };
+        }
+        getnewsdata();
+    </script>
+
+    <div class="row" id="news-carousel" style="max-height: 1000px; overflow: auto;">
+    </div>
+</div>
